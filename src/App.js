@@ -26,6 +26,29 @@ class App extends Component {
       {title: 'New Almaden Quicksilver Mine Museum', location: {lat: 37.18, lng: -121.835556}}
     ]
   }
+
+  map = null;
+  markers = [];
+  largeInfowindow = null;
+
+  componentDidMount() {
+    window.initMap = this.initMap;
+    createScriptTagGoogleMapApi('https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap');
+  }
+
+  initMap = () => {
+    console.log('app.initMap(begin)', this.map)
+    let self = this;
+    self.map = new window.google.maps.Map(document.getElementById('mapContainer'), {
+      center: {lat:37.3852183, lng: -122.1141298},
+      zoom: 10,
+      mapTypeControl: false
+    });
+
+    self.largeInfowindow = new window.google.maps.InfoWindow();
+    console.log('app.initMap(end)', self.map)
+  }
+
   render() {
     return (
       <div className="app">
