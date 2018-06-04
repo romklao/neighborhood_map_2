@@ -1,0 +1,26 @@
+* {
+  box-sizing: border-box;
+  font-family: Roboto; /*Cuprum*/
+  margin: 0;
+  padding: 0;
+}
+
+html, body, .root {
+  height: 100%;
+}
+
+body {
+  line-height: 1.5;
+}
+
+body, .app {
+  background: white;
+}
+
+#mapContainer {
+  bottom:0px;
+  height: 100%;
+  left: 362px;
+  position: absolute;
+  right: 0px;
+}
