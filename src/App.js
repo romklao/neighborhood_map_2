@@ -26,6 +26,13 @@ class App extends Component {
       {title: 'New Almaden Quicksilver Mine Museum', location: {lat: 37.18, lng: -121.835556}}
     ]
   }
+  render() {
+    return (
+      <div className="app">
+        <div id="mapContainer"></div>
+      </div>
+    );
+  }
 }
 
 function createScriptTagGoogleMapApi(url) {
