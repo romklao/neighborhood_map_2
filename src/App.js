@@ -51,6 +51,7 @@ class App extends Component {
 
   createMarkers = () => {
     let self = this;
+
     for (let location of this.state.locations) {
       let position = location.location;
       let title = location.title;
@@ -65,7 +66,18 @@ class App extends Component {
       self.markers.push(marker);
 
       marker.addListener('click', function() {
+        self.populateInfoWindow(marker, self.largeInfowindow);
       });
+    }
+  }
+
+  populateInfoWindow = (marker, infowindow) => {
+    let self = this;
+    if (infowindow.marker !== marker) {
+      infowindow.marker = marker;
+      infowindow.setContent(`<div>${marker.title}</div>`);
+      infowindow.open(self.map, marker);
+      infowindow.addListener('closeclick', () => {infowindow = null});
     }
   }
 
