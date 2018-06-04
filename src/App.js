@@ -27,3 +27,18 @@ class App extends Component {
     ]
   }
 }
+
+function createScriptTagGoogleMapApi(url) {
+  let tag = window.document.getElementsByTagName('script')[0];
+  let scriptTag = window.document.createElement('script');
+
+  scriptTag.async = true;
+  scriptTag.defer = true;
+  scriptTag.src = url;
+  scriptTag.onerror = function () {
+      document.write("Google Maps can't be loaded");
+  };
+  tag.parentNode.insertBefore(scriptTag, tag);
+}
+
+export default App;
