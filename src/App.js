@@ -37,7 +37,6 @@ class App extends Component {
   }
 
   initMap = () => {
-    console.log('app.initMap(begin)', this.map)
     let self = this;
     self.map = new window.google.maps.Map(document.getElementById('mapContainer'), {
       center: {lat:37.3852183, lng: -122.1141298},
@@ -46,7 +45,28 @@ class App extends Component {
     });
 
     self.largeInfowindow = new window.google.maps.InfoWindow();
+    self.createMarkers();
     console.log('app.initMap(end)', self.map)
+  }
+
+  createMarkers = () => {
+    let self = this;
+    for (let location of this.state.locations) {
+      let position = location.location;
+      let title = location.title;
+
+      let marker = new window.google.maps.Marker({
+        position: position,
+        title: title,
+        animation: window.google.maps.Animation.DROP,
+        map: self.map
+      });
+
+      self.markers.push(marker);
+
+      marker.addListener('click', function() {
+      });
+    }
   }
 
   render() {
