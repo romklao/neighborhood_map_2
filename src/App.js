@@ -197,6 +197,59 @@ class App extends Component {
     }
   }
 
+  generateInfoWindow = (marker, infowindow) => {
+    let self = this;
+
+    if (infowindow.marker !== marker) {
+      infowindow.setContent('');
+      infowindow.marker = marker;
+      console.log('marker', marker)
+    }
+
+    let streetViewService = new window.google.maps.StreetViewService();
+    let radius = 100;
+
+    let getStreetView = (data, status) => {
+      if (status === window.google.maps.StreetViewStatus.OK) {
+        let nearStreetViewLocation = data.location.latLng;
+        let heading = window.google.maps.geometry.spherical.computeHeading(
+          nearStreetViewLocation, marker.position);
+
+        self.getPlacesDetails(marker, 'info-streetview')
+
+        infowindow.setContent(
+          `<div id="info-wrap-streetview">
+            <div id="pano"></div>
+            <div id='info-streetview'></div>
+           </div>`
+        );
+        let panoramaOptions = {
+          position: nearStreetViewLocation,
+          pov: {
+            heading: heading,
+            pitch: 5,
+          }
+        };
+        let panoContainer = window.document.getElementById('pano');
+        let panorama = new window.google.maps.StreetViewPanorama(panoContainer, panoramaOptions);
+      } else {
+
+        self.getPlacesDetails(marker, 'info-no-streetview')
+
+        infowindow.setContent(
+          `<div id="infowrap-no-streetview">
+            <div id="no-image">No street view found!</div>
+            <div id='info-no-streetview'></div>
+          </div>`
+        );
+      }
+    }
+
+    streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+    infowindow.open(self.map, marker);
+    infowindow.addListener('closeclick', () => {infowindow = null});
+  }
+
   render() {
     return (
       <div className="app">
