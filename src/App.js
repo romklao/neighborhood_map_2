@@ -1,51 +1,164 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import MapContainer from './Components/MapContainer';
+import config from './Config.js';
 import './App.css';
 
 class App extends Component {
   state = {
     locations: [
-      {title: 'Intel Museum', location: {lat: 37.387878, lng: -121.963544}},
-      {title: 'Santa Clara Railroad Depot and Tower', location: {lat: 37.353056, lng: -121.936389}},
-      {title: 'Palo Alto Baylands Nature Preserve', location: {lat: 37.459608, lng:  -122.106412}},
-      {title: 'Buck’s of Woodside', location: {lat: 37.429667, lng: -122.255111}},
-      {title: 'Apple’s Company Store and Headquarters', location: {lat: 37.33182, lng: -122.03118}},
-      {title: 'Ardenwood Historic Farm', location: {lat: 37.558056, lng: -122.049444}},
-      {title: 'NASA Ames Research Center', location: {lat: 37.415229, lng: -122.06265 }},
-      {title: 'Castle Rock State Park', location: {lat: 37.2306, lng: -122.09568}},
-      {title: 'Filoli Center', location: {lat: 37.4704, lng: -122.310703}},
-      {title: 'The Last Spike', location: {lat: 50.975278, lng: -118.723611}},
-      {title: 'Mt. Umunhum', location: {lat: 37.160502, lng: -121.898567}},
-      {title: 'The Winchester Mystery House', location: {lat: 37.318361, lng: -121.950761}},
-      {title: 'Peralta Adobe', location: {lat: 37.336403, lng: -121.894753}},
-      {title: 'Kelley Park', location: {lat: 37.323889, lng: -121.861944}},
-      {title: 'Stanford Memorial Church', location: {lat: 37.4268, lng: -122.1705}},
-      {title: 'San Jose Municipal Rose Garden', location: {lat: 37.33176, lng: -121.92859}},
-      {title: 'The Tech Museum of Innovation', location: {lat: 37.331437, lng: -121.890728}},
-      {title: 'San Mateo County History Museum', location: {lat: 37.486882, lng: -122.229688}},
-      {title: 'IBM’s New Almaden Research Lab', location: {lat: 37.211, lng: -121.805}},
-      {title: 'New Almaden Quicksilver Mine Museum', location: {lat: 37.18, lng: -121.835556}}
+      {
+        title: 'Intel Museum',
+        location: {
+          lat: 37.387878,
+          lng: -121.963544
+        }
+      },
+      {
+        title: 'South Bay Historical Railroad Society',
+        location: {
+          lat: 37.353056,
+          lng: -121.936389
+        }
+      },
+      {
+        title: 'Palo Alto Baylands Nature Preserve',
+        location: {
+          lat: 37.459608, lng: -122.106412
+        }
+      },
+      {
+        title: 'Buck’s of Woodside',
+        location: {
+          lat: 37.429667, lng: -122.255111
+        }
+      },
+      {
+        title: 'Apple Campus',
+        location: {
+          lat: 37.33182,
+          lng: -122.03118
+        }
+      },
+      {
+        title: 'Ardenwood Historic Farm',
+        location: {
+          lat: 37.558056,
+          lng: -122.049444
+        }
+      },
+      {
+        title: 'Castle Rock State Park',
+        location: {
+          lat: 37.2306,
+          lng: -122.09568
+        }
+      },
+      {
+        title: 'Filoli Center',
+        location: {
+          lat: 37.4704,
+          lng: -122.310703
+        }
+      },
+      {
+        title: 'The Last Spike',
+        location: {
+          lat: 50.975278,
+          lng: -118.723611
+        }
+      },
+      {
+        title: 'Mt. Umunhum',
+        location: {
+          lat: 37.160502,
+          lng: -121.898567
+        }
+      },
+      {
+        title: 'The Winchester Mystery House',
+        location: {
+          lat: 37.318361,
+          lng: -121.950761
+        }
+      },
+      {
+        title: 'Peralta Adobe',
+        location: {
+          lat: 37.336403,
+          lng: -121.894753
+        }
+      },
+      {
+        title: 'Kelley Park',
+        location: {
+          lat: 37.323889,
+          lng: -121.861944
+        }
+      },
+      {
+        title: 'Stanford Memorial Church',
+        location: {
+          lat: 37.4268,
+          lng: -122.1705
+        }
+      },
+      {
+        title: 'San Jose Municipal Rose Garden',
+        location: {
+          lat: 37.33176,
+          lng: -121.92859
+        }
+      },
+      {
+        title: 'The Tech Museum of Innovation',
+        location: {
+          lat: 37.331437,
+          lng: -121.890728
+        }
+      },
+      {
+        title: 'San Mateo County History Museum',
+        location: {
+          lat: 37.486882,
+          lng: -122.229688
+        }
+      },
+      {
+        title: 'IBM’s New Almaden Research Lab',
+        location: {
+          lat: 37.211, lng: -121.805
+        }
+      },
+      {
+        title: 'New Almaden Quicksilver Mine Museum',
+        location: {
+          lat: 37.18,
+          lng: -121.835556
+        }
+      }
     ]
   }
 
   map = null;
   markers = [];
-  largeInfowindow = null;
 
   componentDidMount() {
+    //this.getYelpReviews();
     window.initMap = this.initMap;
     createScriptTagGoogleMapApi('https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap');
   }
 
   initMap = () => {
     let self = this;
-    self.map = new window.google.maps.Map(document.getElementById('mapContainer'), {
+
+    self.map = new window.google.maps.Map(document.getElementById('map-container'), {
       center: {lat:37.3852183, lng: -122.1141298},
       zoom: 10,
       mapTypeControl: false
     });
 
-    self.largeInfowindow = new window.google.maps.InfoWindow();
-    self.createMarkers();
+    this.createMarkers();
     console.log('app.initMap(end)', self.map)
   }
 
@@ -60,31 +173,34 @@ class App extends Component {
         position: position,
         title: title,
         animation: window.google.maps.Animation.DROP,
-        map: self.map
+        map: self.map,
+        id: null
       });
+
+      let placesService = new window.google.maps.places.PlacesService(self.map);
+      let placeInfoWindow = new window.google.maps.InfoWindow();
 
       self.markers.push(marker);
 
       marker.addListener('click', function() {
-        self.populateInfoWindow(marker, self.largeInfowindow);
+        placesService.textSearch({query: marker.title}, (results, status) => {
+          if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+            self.generateInfoWindow(marker, placeInfoWindow)
+          }
+          console.log('results', results)
+          if (results[0]) {
+            let markerId = results[0].place_id;
+            marker.id = markerId;
+          }
+        });
       });
-    }
-  }
-
-  populateInfoWindow = (marker, infowindow) => {
-    let self = this;
-    if (infowindow.marker !== marker) {
-      infowindow.marker = marker;
-      infowindow.setContent(`<div>${marker.title}</div>`);
-      infowindow.open(self.map, marker);
-      infowindow.addListener('closeclick', () => {infowindow = null});
     }
   }
 
   render() {
     return (
       <div className="app">
-        <div id="mapContainer"></div>
+        <MapContainer />
       </div>
     );
   }
