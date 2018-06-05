@@ -250,6 +250,42 @@ class App extends Component {
     infowindow.addListener('closeclick', () => {infowindow = null});
   }
 
+  getPlacesDetails = (marker, elementId) => {
+    let self = this;
+    let service = new window.google.maps.places.PlacesService(self.map);
+    console.log('service', service)
+
+    service.getDetails({placeId: marker.id}, function(place, status) {
+      console.log('placeId, status', marker.id, status)
+      if (status === window.google.maps.places.PlacesServiceStatus.OK) {
+
+        let info = '<div id="info-wrap">';
+
+        if (place.name) {
+          info += `<h4>${place.name}</h4>`;
+        }
+        if (place.formatted_address) {
+          info += `<p>${place.formatted_address}</p>`;
+        }
+        if (place.formatted_phone_number) {
+          info += `<p>${place.formatted_phone_number}</p>`;
+        }
+        if (place.opening_hours) {
+          info += `<h4>Hours:</h4>
+                   <p>${place.opening_hours.weekday_text[0]}</p>
+                   <p>${place.opening_hours.weekday_text[1]}</p>
+                   <p>${place.opening_hours.weekday_text[2]}</p>
+                   <p>${place.opening_hours.weekday_text[3]}</p>
+                   <p>${place.opening_hours.weekday_text[4]}</p>
+                   <p>${place.opening_hours.weekday_text[5]}</p>
+                   <p>${place.opening_hours.weekday_text[6]}</p>`;
+        }
+        info += '<div>';
+        document.getElementById(elementId).innerHTML = info;
+      }
+    });
+  }
+
   render() {
     return (
       <div className="app">
