@@ -17,10 +17,49 @@ body, .app {
   background: white;
 }
 
-#mapContainer {
+#map-container {
   bottom:0px;
   height: 100%;
-  left: 362px;
+  left: 300px;
   position: absolute;
   right: 0px;
 }
+
+#pano, #no-image {
+  width: 260px;
+  height: 250px;
+  margin-right: 20px;
+}
+
+#pano:hover {
+  cursor: pointer;
+}
+
+#info-wrap-streetview, #infowrap-no-streetview, #no-image {
+  display: flex;
+  line-height: 1.5;
+  align-items: center;
+  justify-content: center;
+}
+
+#no-image {
+  border: 1px solid lightgray;
+  font-size: 19px;
+  font-weight: 400;
+}
+
+#info-wrap h4 {
+  font-size: 18px;
+  font-weight: 400;
+  color: black;
+  text-decoration: underline;
+}
+
+#info-wrap p {
+  font-size: 15px;
+}
+
+
+
+
+
