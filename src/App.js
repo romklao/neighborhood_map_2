@@ -144,7 +144,7 @@ class App extends Component {
   markers = [];
 
   componentDidMount() {
-    //this.getYelpReviews();
+    this.getYelpReviews();
     window.initMap = this.initMap;
     createScriptTagGoogleMapApi('https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap');
   }
@@ -285,6 +285,23 @@ class App extends Component {
       }
     });
   }
+
+  getYelpReviews = (auth) => {
+    let apiData = {
+      headers: {'Authorization': config.headers.Authorization},
+      params: {
+        latitude: this.state.locations[14].location.lat,
+        longitude: this.state.locations[14].location.lng,
+        term: this.state.locations[14].title,
+        limit: 1,
+      }
+    }
+    console.log('apiData', apiData)
+    axios.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search', apiData)
+    .then(response => console.log('response', response))
+    .catch(err => console.log('error', err));
+  }
+
 
   render() {
     return (
