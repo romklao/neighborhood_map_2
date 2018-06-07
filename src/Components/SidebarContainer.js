@@ -1,10 +1,23 @@
 import React, { Component } from 'react';
-//import PropTypes from 'prop-types';
-import escapeRegExp from 'escape-string-regexp';
+import PropTypes from 'prop-types';
 
 class SidebarContainer extends Component {
 
   static propTypes = {
+    markers: PropTypes.array.isRequired
+  }
+
+  filterLocations = () => {
+    const { markers } = this.props;
+    const query = document.getElementById('search-input').value;
+
+    for (let marker of markers) {
+      if (marker.title.toLowerCase().indexOf(query.toLowerCase()) >= 0) {
+        marker.setVisible(true);
+      } else {
+        marker.setVisible(false);
+      }
+    };
   }
 
   onOpenMarker = (e) => {
@@ -21,7 +34,6 @@ class SidebarContainer extends Component {
 
   render() {
     const { markers } = this.props;
-    //const { query } = this.state;
 
     return (
       <div>
@@ -30,7 +42,8 @@ class SidebarContainer extends Component {
             id="search-input"
             type="search"
             list="places"
-            placeholder="Place Location"
+            placeholder="Place Name"
+            onChange={this.onOpenMarker}
           />
           <datalist id="places">
             {markers.map((marker, index) => (
@@ -44,7 +57,7 @@ class SidebarContainer extends Component {
           <input
             type="submit"
             value="Filter"
-            onClick={this.searchPlaces}
+            onClick={this.filterLocations}
           />
       </div>
     );
