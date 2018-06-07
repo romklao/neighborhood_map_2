@@ -143,7 +143,7 @@ class App extends Component {
   }
 
   map = null;
-  placesMarkers = [];
+  markers = [];
 
   componentDidMount() {
     window.initMap = this.initMap;
@@ -184,9 +184,10 @@ class App extends Component {
 
       let placesService = new window.google.maps.places.PlacesService(self.map);
       let placeInfoWindow = new window.google.maps.InfoWindow();
+      let bounds;
 
       marker.addListener('click', function() {
-        let bounds = self.map.getBounds();
+        bounds = self.map.getBounds();
 
         placesService.textSearch({
           query: marker.title,
@@ -201,8 +202,8 @@ class App extends Component {
           }
         });
       });
-      self.placesMarkers.push(marker);
-      self.setState({markers: self.placesMarkers});
+      self.markers.push(marker);
+      self.setState({markers: self.markers});
     }
   }
 
@@ -217,8 +218,6 @@ class App extends Component {
     let streetViewService = new window.google.maps.StreetViewService();
     let radius = 100;
 
-    console.log('streetViewService', streetViewService)
-
     let getStreetView = (data, status, ) => {
       console.log('dataP, status', data, status)
       if (status === window.google.maps.StreetViewStatus.OK) {
@@ -226,6 +225,9 @@ class App extends Component {
         let nearStreetViewLocation = data.location.latLng;
         let heading = window.google.maps.geometry.spherical.computeHeading(
           nearStreetViewLocation, marker.position);
+
+        self.getYelpReviews(marker, 'rating-streetview');
+        self.getPlacesDetails(marker, 'info-streetview');
 
         infowindow.setContent(
           `<div id="info-wrap-streetview">
@@ -244,11 +246,10 @@ class App extends Component {
         };
         let panoContainer = window.document.getElementById('pano');
         let panorama = new window.google.maps.StreetViewPanorama(panoContainer, panoramaOptions);
-
-        self.getYelpReviews(marker, 'rating-streetview');
-        self.getPlacesDetails(marker, 'info-streetview');
-
       } else {
+
+        self.getYelpReviews(marker, 'rating-no-streetview');
+        self.getPlacesDetails(marker, 'info-no-streetview');
 
         infowindow.setContent(
           `<div id="infowrap-no-streetview">
@@ -257,9 +258,6 @@ class App extends Component {
            </div>
            <div id="rating-no-streetview"></div>`
         );
-
-        self.getYelpReviews(marker, 'rating-no-streetview');
-        self.getPlacesDetails(marker, 'info-no-streetview');
       }
     }
     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
