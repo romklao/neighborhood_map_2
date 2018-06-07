@@ -186,7 +186,12 @@ class App extends Component {
       let placeInfoWindow = new window.google.maps.InfoWindow();
 
       marker.addListener('click', function() {
-        placesService.textSearch({query: marker.title}, (data, status) => {
+        let bounds = self.map.getBounds();
+
+        placesService.textSearch({
+          query: marker.title,
+          bounds: bounds
+        }, (data, status) => {
           if (data[0]) {
             let markerId = data[0].place_id;
             marker.id = markerId;
