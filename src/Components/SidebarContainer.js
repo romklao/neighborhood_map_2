@@ -33,6 +33,7 @@ class SidebarContainer extends Component {
   }
 
   render() {
+
     const { markers } = this.props;
 
     return (
@@ -45,7 +46,8 @@ class SidebarContainer extends Component {
             placeholder="Place Name"
             onChange={this.onOpenMarker}
           />
-          <datalist id="places">
+          <datalist
+            id="places">
             {markers.map((marker, index) => (
               <option
                 className="place-option"
