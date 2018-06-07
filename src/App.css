@@ -48,7 +48,7 @@ body, .app {
   font-weight: 400;
 }
 
-#info-wrap h4 {
+#info-wrap h4, #rating {
   font-size: 18px;
   font-weight: 400;
   color: black;
@@ -56,6 +56,16 @@ body, .app {
 }
 
 #info-wrap p {
+  font-size: 15px;
+}
+
+#rating-streetview, #rating-no-streetview {
+  font-size: 15px;
+  margin-top: 7px;
+}
+
+#num-rating {
+  margin: 0 10px 0 3px;
   font-size: 15px;
 }
 
