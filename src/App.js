@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import MapContainer from './Components/MapContainer';
+import SidebarContainer from './Components/SidebarContainer';
 import config from './Config.js';
 import './App.css';
 
@@ -326,6 +327,11 @@ class App extends Component {
   render() {
     return (
       <div className="app">
+        <SidebarContainer
+          markers={ this.state.markers }
+          map={ this.map }
+          generateMarkers={ this.createMarkers }
+        />
         <MapContainer />
       </div>
     );
