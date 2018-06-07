@@ -6,6 +6,7 @@ import './App.css';
 
 class App extends Component {
   state = {
+    markers: [],
     locations: [
       {
         title: 'Intel Museum',
@@ -141,12 +142,12 @@ class App extends Component {
   }
 
   map = null;
-  markers = [];
+  placesMarkers = [];
 
   componentDidMount() {
-    this.getYelpReviews();
     window.initMap = this.initMap;
-    createScriptTagGoogleMapApi('https://maps.googleapis.com/maps/api/js?libraries=places,geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap');
+    createScriptTagGoogleMapApi(`https://maps.googleapis.com/maps/api/js?libraries=places,
+      geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap`);
   }
 
   initMap = () => {
@@ -159,7 +160,6 @@ class App extends Component {
     });
 
     this.createMarkers();
-    console.log('app.initMap(end)', self.map)
   }
 
   createMarkers = () => {
@@ -167,10 +167,14 @@ class App extends Component {
 
     for (let location of this.state.locations) {
       let position = location.location;
+      let latitude = location.location.lat;
+      let longitude = location.location.lng;
       let title = location.title;
 
       let marker = new window.google.maps.Marker({
         position: position,
+        latitude: latitude,
+        longitude: longitude,
         title: title,
         animation: window.google.maps.Animation.DROP,
         map: self.map,
@@ -180,20 +184,19 @@ class App extends Component {
       let placesService = new window.google.maps.places.PlacesService(self.map);
       let placeInfoWindow = new window.google.maps.InfoWindow();
 
-      self.markers.push(marker);
-
       marker.addListener('click', function() {
-        placesService.textSearch({query: marker.title}, (results, status) => {
+        placesService.textSearch({query: marker.title}, (data, status) => {
+          if (data[0]) {
+            let markerId = data[0].place_id;
+            marker.id = markerId;
+          }
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
             self.generateInfoWindow(marker, placeInfoWindow)
           }
-          console.log('results', results)
-          if (results[0]) {
-            let markerId = results[0].place_id;
-            marker.id = markerId;
-          }
         });
       });
+      self.placesMarkers.push(marker);
+      self.setState({markers: self.placesMarkers});
     }
   }
 
@@ -203,26 +206,29 @@ class App extends Component {
     if (infowindow.marker !== marker) {
       infowindow.setContent('');
       infowindow.marker = marker;
-      console.log('marker', marker)
     }
 
     let streetViewService = new window.google.maps.StreetViewService();
     let radius = 100;
 
-    let getStreetView = (data, status) => {
+    console.log('streetViewService', streetViewService)
+
+    let getStreetView = (data, status, ) => {
+      console.log('dataP, status', data, status)
       if (status === window.google.maps.StreetViewStatus.OK) {
+
         let nearStreetViewLocation = data.location.latLng;
         let heading = window.google.maps.geometry.spherical.computeHeading(
           nearStreetViewLocation, marker.position);
 
-        self.getPlacesDetails(marker, 'info-streetview')
-
         infowindow.setContent(
           `<div id="info-wrap-streetview">
             <div id="pano"></div>
-            <div id='info-streetview'></div>
-           </div>`
+            <div id="info-streetview"></div>
+           </div>
+           <div id="rating-streetview"></div>`
         );
+
         let panoramaOptions = {
           position: nearStreetViewLocation,
           pov: {
@@ -232,19 +238,24 @@ class App extends Component {
         };
         let panoContainer = window.document.getElementById('pano');
         let panorama = new window.google.maps.StreetViewPanorama(panoContainer, panoramaOptions);
-      } else {
 
-        self.getPlacesDetails(marker, 'info-no-streetview')
+        self.getYelpReviews(marker, 'rating-streetview');
+        self.getPlacesDetails(marker, 'info-streetview');
+
+      } else {
 
         infowindow.setContent(
           `<div id="infowrap-no-streetview">
             <div id="no-image">No street view found!</div>
             <div id='info-no-streetview'></div>
-          </div>`
+           </div>
+           <div id="rating-no-streetview"></div>`
         );
+
+        self.getYelpReviews(marker, 'rating-no-streetview');
+        self.getPlacesDetails(marker, 'info-no-streetview');
       }
     }
-
     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
     infowindow.open(self.map, marker);
     infowindow.addListener('closeclick', () => {infowindow = null});
@@ -253,10 +264,9 @@ class App extends Component {
   getPlacesDetails = (marker, elementId) => {
     let self = this;
     let service = new window.google.maps.places.PlacesService(self.map);
-    console.log('service', service)
 
     service.getDetails({placeId: marker.id}, function(place, status) {
-      console.log('placeId, status', marker.id, status)
+
       if (status === window.google.maps.places.PlacesServiceStatus.OK) {
 
         let info = '<div id="info-wrap">';
@@ -286,22 +296,32 @@ class App extends Component {
     });
   }
 
-  getYelpReviews = (auth) => {
-    let apiData = {
+  getYelpReviews = (marker, elementId) => {
+    let yelpApiUrl = {
       headers: {'Authorization': config.headers.Authorization},
       params: {
-        latitude: this.state.locations[14].location.lat,
-        longitude: this.state.locations[14].location.lng,
-        term: this.state.locations[14].title,
-        limit: 1,
+        latitude: marker.latitude,
+        longitude: marker.longitude,
+        term: marker.title,
+        limit: 1
       }
     }
-    console.log('apiData', apiData)
-    axios.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search', apiData)
-    .then(response => console.log('response', response))
-    .catch(err => console.log('error', err));
-  }
+    axios.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search', yelpApiUrl)
+    .then(response => {
+      let ratingReview = '<p>';
 
+      if (response.data.businesses[0].rating) {
+        ratingReview += `<span id="rating">Rating: </span>
+                         <span id="num-rating">${response.data.businesses[0].rating} out of 5</span>`
+      }
+      if (response.data.businesses[0].url) {
+        ratingReview += `<a href="${response.data.businesses[0].url}">Review</a>`
+      }
+      ratingReview += '</p>'
+      document.getElementById(elementId).innerHTML = ratingReview;
+    })
+    .catch(err => `<p>${err}</p>`);
+  }
 
   render() {
     return (
