@@ -2,19 +2,23 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import MapContainer from './Components/MapContainer';
 import SidebarContainer from './Components/SidebarContainer';
-import config from './Config.js';
+import {theme, theme2, theme3} from './Theme';
+import config from './Config';
 import './App.css';
 
 class App extends Component {
   state = {
     markers: [],
-    locations: require('./Components/locations.json')
+    locations: require('./Components/locations.json'),
+    styles: theme
   }
 
   map = null;
   markers = [];
 
   componentDidMount() {
+      console.log('theme',this.state.styles)
+
     window.initMap = this.initMap;
     createScriptTagGoogleMapApi(`https://maps.googleapis.com/maps/api/js?libraries=places,
       geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap`);
@@ -22,10 +26,12 @@ class App extends Component {
 
   initMap = () => {
     let self = this;
+    const mapView = document.getElementById('map-container');
 
-    self.map = new window.google.maps.Map(document.getElementById('map-container'), {
+    self.map = new window.google.maps.Map(mapView, {
       center: {lat:37.4192183, lng: -122.181167},
       zoom: 10,
+      styles: self.state.styles,
       mapTypeControl: false
     });
 
@@ -124,7 +130,7 @@ class App extends Component {
         self.getPlacesDetails(marker, 'info-no-streetview');
 
         infowindow.setContent(
-          `<div id="infowrap-no-streetview">
+          `<div id="info-wrap-no-streetview">
             <div id="no-image">No street view found!</div>
             <div id='info-no-streetview'></div>
            </div>
