@@ -33,20 +33,45 @@ class SidebarContainer extends Component {
     }
   }
 
+  toggleHidden = () => {
+    const sideBar = document.getElementById('search-container');
+    const navHam = document.getElementById('nav-ham');
+
+    if (sideBar.style.display === "block") {
+      sideBar.style.display = "none";
+    } else {
+      sideBar.style.display = "block";
+    }
+
+    if (navHam.style.left === "16em") {
+      navHam.style.left = "0";
+    } else {
+      navHam.style.left = "16em";
+    }
+  }
+
   render() {
 
     const { markers } = this.props;
-
     markers.sort(sortBy('title'));
 
     return (
       <nav className="nav-sidebar-container">
-        <div className="nav-logo-ham">
-          <a id="menu" className="nav-ham"><i className="fas fa-bars"></i></a>
-        </div>
-        <div className="search-container">
-          <p>Silicon Valley</p>
-          <div className="input-box">
+        <header id="nav-ham-wrap">
+          <div id="nav-ham">
+            <a
+              onClick={this.toggleHidden}
+              className="ham"
+            >
+              <i className="fas fa-bars"></i>
+            </a>
+          </div>
+        </header>
+        <aside id="search-container">
+          <div id="input-box">
+            <p className="header">
+              Silicon Valley
+            </p>
             <input
               id="search-input"
               type="search"
@@ -71,7 +96,7 @@ class SidebarContainer extends Component {
               onClick={this.filterLocations}
             />
           </div>
-        </div>
+        </aside>
       </nav>
     );
   }
