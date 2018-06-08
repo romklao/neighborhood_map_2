@@ -1,6 +1,6 @@
 * {
   box-sizing: border-box;
-  font-family: Roboto; /*Cuprum*/
+  font-family: Lato; /*Cuprum*/
   margin: 0;
   padding: 0;
 }
@@ -17,12 +17,43 @@ body, .app {
   background: white;
 }
 
-#map-container {
-  bottom:0px;
-  height: 100%;
-  left: 300px;
+.nav-logo-ham {
   position: absolute;
-  right: 0px;
+  z-index: 100;
+  left: 14.6em;
+  width: 100%;
+  background: #1b465d;
+  color: #0891c5;
+  padding: 0.7em 1.5em;
+  color: #cfedf9;
+  font-size: 19px;
+}
+
+.search-container {
+  position: absolute;
+  z-index: 105;
+  left: 0;
+  right: 0;
+  width: 17.4em;
+  height: 100vh;
+  background: #032c42;
+  color: #d9dcde;
+  padding: 15px 0;
+}
+
+.search-container p {
+  text-align: center;
+  font-size: 1.6em;
+  font-weight: 400;
+  margin-bottom: 1em;
+}
+
+#map-container {
+  position: absolute;
+  height: 100%;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 #pano, #no-image {
