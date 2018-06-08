@@ -154,7 +154,23 @@ input[type=submit]:hover {
   font-size: 15px;
 }
 
-
+@media screen and (max-width: 650px) {
+  .gm-style-iw {
+    max-width: 100% !important;
+  }
+  #info-wrap-streetview,
+  #info-wrap-no-streetview {
+    flex-direction: column;
+  }
+  #info-streetview,
+  #info-no-streetview {
+    padding: 14px 0 0 14px;
+  }
+  #rating-streetview,
+  #rating-no-streetview {
+    padding: 0 0 0 14px;
+  }
+}
 
 
 
