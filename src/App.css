@@ -48,6 +48,30 @@ body, .app {
   margin-bottom: 1em;
 }
 
+input[list], input[type=submit] {
+  font-size: 16px;
+  height: 35px;
+  border: 1px solid #040433;
+  border-radius: 2px;
+}
+
+input[list] {
+  width: 80%;
+  background-color: #f0f2f5;
+  padding: 10px;
+}
+
+input[type=submit] {
+  width: 20%;
+  background-color: #0891c5;
+  padding: 7px;
+  color: white;
+}
+
+input[type=submit]:hover {
+  cursor: pointer;
+}
+
 #map-container {
   position: absolute;
   height: 100%;
