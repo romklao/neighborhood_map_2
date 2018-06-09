@@ -17,7 +17,6 @@ class App extends Component {
   markers = [];
 
   componentDidMount() {
-      console.log('theme',this.state.styles)
 
     window.initMap = this.initMap;
     createScriptTagGoogleMapApi(`https://maps.googleapis.com/maps/api/js?libraries=places,
