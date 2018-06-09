@@ -240,7 +240,7 @@ class App extends Component {
   }
 }
 
-// This function is for creating the script tag that hold Google Map API
+// This function is for creating the script tag that holds Google Map API
 function createScriptTagGoogleMapApi(url) {
   let tag = window.document.getElementsByTagName('script')[0];
   let scriptTag = window.document.createElement('script');
