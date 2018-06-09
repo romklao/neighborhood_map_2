@@ -10,6 +10,10 @@ The app allows you to filter the list down as you type. In return, it displays t
 
 This application follow this [Udacity Project Rubric](https://review.udacity.com/#!/rubrics/1351/view)
 
+## Run Online Project
+
+Click the link following https://romklao.github.io/neighborhood_map/ to see the webpage
+
 ## Features
 
 1. Click on any marker to see the location details retrieved from the [Google Map API](https://developers.google.com/places/web-service/get-api-key) and reviews retrieved from [Yelp Fusion API](https://www.yelp.com/developers/documentation/v3).
