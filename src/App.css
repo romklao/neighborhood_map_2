@@ -107,8 +107,8 @@ input[type=submit]:hover {
 #pano,
 #no-image {
   width: 260px;
-  height: 250px;
-  margin-right: 20px;
+  height: 270px;
+  margin-right: 1.3em;
 }
 
 #pano:hover {
@@ -125,6 +125,10 @@ input[type=submit]:hover {
   line-height: 1.5;
   align-items: center;
   justify-content: center;
+}
+
+#info-streetview {
+  width: 260px;
 }
 
 #no-image {
@@ -164,6 +168,8 @@ input[type=submit]:hover {
 @media screen and (max-width: 650px) {
   .gm-style-iw {
     max-width: 100% !important;
+    top: 30px !important;
+    left: 35px !important;
   }
   #info-wrap-streetview,
   #info-wrap-no-streetview {
@@ -171,11 +177,14 @@ input[type=submit]:hover {
   }
   #info-streetview,
   #info-no-streetview {
-    padding: 14px 0 0 14px;
+    margin-top: 5px;
   }
   #rating-streetview,
   #rating-no-streetview {
-    padding: 0 0 0 14px;
+    margin: 4px 7px 35px 7px;
+  }
+  #pano, #no-image {
+    height: 260px;
   }
 }
 
