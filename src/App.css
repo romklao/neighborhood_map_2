@@ -17,6 +17,7 @@ body, .app {
   background: white;
 }
 
+/* Style hamburger icon wrap in nav bar */
 #nav-ham-wrap {
   position: fixed;
   z-index: 100;
@@ -48,6 +49,7 @@ body, .app {
   cursor: pointer;
 }
 
+/* Style search box and header nav */
 #search-container {
   position: absolute;
   z-index: 105;
@@ -67,6 +69,7 @@ body, .app {
   padding: 7px 0 9px;
 }
 
+/* Style search and submit input */
 input[list], input[type=submit] {
   font-size: 16px;
   height: 35px;
@@ -91,6 +94,7 @@ input[type=submit]:hover {
   cursor: pointer;
 }
 
+/* Style map */
 #map-container {
   position: absolute;
   height: 100%;
@@ -99,6 +103,7 @@ input[type=submit]:hover {
   right: 0;
 }
 
+/* style infowindow */
 #pano,
 #no-image {
   width: 260px;
@@ -153,6 +158,8 @@ input[type=submit]:hover {
   margin: 0 10px 0 3px;
   font-size: 15px;
 }
+
+/*media query*/
 
 @media screen and (max-width: 650px) {
   .gm-style-iw {
