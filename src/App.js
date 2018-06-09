@@ -17,7 +17,6 @@ class App extends Component {
   markers = [];
 
   componentDidMount() {
-
     window.initMap = this.initMap;
     createScriptTagGoogleMapApi(`https://maps.googleapis.com/maps/api/js?libraries=places,
       geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap`);
