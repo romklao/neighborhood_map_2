@@ -4,7 +4,7 @@
 
 This is the **Udacity Neighborhood Map Project**. It's intended as a challenge to put together a website from various APIs. This includes making function calls to Google Maps to get the map and locations details. Furthermore, ratings and reviews are retrieved from Yelp Fusion.
 
-Included is a list of atrractions in Silicon Valley, that visitors should stop by.
+Included is a list of atrractions in Silicon Valley that visitors should stop by.
 
 The app allows you to filter the list down as you type. In return, it displays the locations on the map.
 
