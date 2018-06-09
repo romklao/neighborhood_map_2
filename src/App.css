@@ -179,9 +179,11 @@ input[type=submit]:hover {
   #info-no-streetview {
     margin-top: 5px;
   }
-  #rating-streetview,
-  #rating-no-streetview {
+  #rating-streetview {
     margin: 4px 7px 35px 7px;
+  }
+  #rating-no-streetview {
+    margin: 4px 7px 35px 3px;
   }
   #pano, #no-image {
     height: 260px;
