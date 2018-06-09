@@ -5,6 +5,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "escape-string-regexp": "^1.0.5",
+    "gh-pages": "^1.2.0",
     "google-maps-react": "^2.0.2",
     "react": "^16.4.0",
     "react-dom": "^16.4.0",
