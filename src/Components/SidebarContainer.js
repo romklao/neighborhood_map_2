@@ -7,7 +7,7 @@ class SidebarContainer extends Component {
   static propTypes = {
     markers: PropTypes.array.isRequired
   }
-
+  // Only show the filtered markers on the map acoording to users search
   filterLocations = () => {
     const { markers } = this.props;
     const query = document.getElementById('search-input').value;
@@ -20,7 +20,7 @@ class SidebarContainer extends Component {
       }
     };
   }
-
+  // Open the marker that is clicked from the search list
   openMarker = (e) => {
     const { markers } = this.props;
     const value = e.target.value;
@@ -32,7 +32,7 @@ class SidebarContainer extends Component {
       }
     }
   }
-
+  // Hide or show the search container when the ham icon is clicked
   toggleHidden = () => {
     const sideBar = document.getElementById('search-container');
     const navHam = document.getElementById('nav-ham');

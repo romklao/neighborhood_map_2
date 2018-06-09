@@ -24,6 +24,7 @@ class App extends Component {
       geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap`);
   }
 
+// Constructor creates a new map - only center and zoom are required.
   initMap = () => {
     let self = this;
     const mapView = document.getElementById('map-container');
@@ -38,6 +39,7 @@ class App extends Component {
     self.createMarkers();
   }
 
+// This function creates markers for each place found in places search.
   createMarkers = () => {
     let self = this;
 
@@ -47,6 +49,7 @@ class App extends Component {
       let longitude = location.location.lng;
       let title = location.title;
 
+      // Create a marker for each place.
       let marker = new window.google.maps.Marker({
         position: position,
         latitude: latitude,
@@ -63,7 +66,8 @@ class App extends Component {
 
       marker.addListener('click', function() {
         bounds = self.map.getBounds();
-
+      // If a marker is clicked, do a place details search
+      // and add id to the marker then call the function to show infowindow
         placesService.textSearch({
           query: marker.title,
           bounds: bounds
@@ -84,18 +88,28 @@ class App extends Component {
     }
   }
 
+  // This function populates the infowindow when the marker is clicked. We'll only allow
+  // one infowindow which will open at the marker that is clicked, and populate based
+  // on that markers position.
   generateInfoWindow = (marker, infowindow) => {
     let self = this;
-
+    // Check to make sure the infowindow is not already opened on this marker.
     if (infowindow.marker !== marker) {
+    // Clear the infowindow content to give the streetview time to load.
       infowindow.setContent('');
       infowindow.marker = marker;
     }
+    // Make sure the marker property is cleared if the infowindow is closed.
+    infowindow.addListener('closeclick', () => {
+      infowindow = null;
+    });
 
     let streetViewService = new window.google.maps.StreetViewService();
     let radius = 100;
-
-    let getStreetView = (data, status, ) => {
+    // In case the status is OK, which means the pano was found, compute the
+    // position of the streetview image, then calculate the heading, then get a
+    // panorama from that and set the options
+    let getStreetView = (data, status) => {
       if (status === window.google.maps.StreetViewStatus.OK) {
 
         let nearStreetViewLocation = data.location.latLng;
@@ -138,14 +152,16 @@ class App extends Component {
         );
       }
     }
-
+    // Use streetview service to get the closest streetview image within
+    // 100 meters of the markers position
     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+    // Open the infowindow on the correct marker.
     infowindow.open(self.map, marker);
-    infowindow.addListener('closeclick', () => {
-      infowindow = null;
-    });
   }
 
+  // This is the PLACE DETAILS search - it's the most detailed so it's only
+  // executed when a marker is selected, indicating the user wants more
+  // details about that place.
   getPlacesDetails = (marker, elementId) => {
     let self = this;
     let service = new window.google.maps.places.PlacesService(self.map);
@@ -182,7 +198,7 @@ class App extends Component {
       }
     });
   }
-
+  // This function is used to retrieve locations rating and reviews from Yelp Fusion API
   getYelpReviews = (marker, elementId) => {
     let yelpApiUrl = {
       headers: {'Authorization': config.headers.Authorization},
@@ -224,6 +240,7 @@ class App extends Component {
   }
 }
 
+// This function is for creating the script tag that hold Google Map API
 function createScriptTagGoogleMapApi(url) {
   let tag = window.document.getElementsByTagName('script')[0];
   let scriptTag = window.document.createElement('script');
