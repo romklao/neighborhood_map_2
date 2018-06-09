@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import MapContainer from './Components/MapContainer';
 import SidebarContainer from './Components/SidebarContainer';
-import {theme, theme2, theme3} from './Theme';
+import { theme } from './Theme';
 import config from './Config';
 import './App.css';
 
