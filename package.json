@@ -14,15 +14,7 @@
     "react-star-rating-component": "^1.4.1",
     "react-star-ratings": "^2.2.0",
     "sort-by": "^1.2.0",
-<<<<<<< HEAD
     "yelp-fusion": "^2.0.3"
-||||||| merged common ancestors
-    "yelp-fusion": "^2.0.3",
-    "homepage" : "http://romklao.github.io/yourreponame"
-=======
-    "yelp-fusion": "^2.0.3",
-    "homepage": "http://romklao.github.io/yourreponame"
->>>>>>> 2ebf99bc393f910acbb75633f1e3b8a9f46a7656
   },
   "scripts": {
     "start": "react-scripts start",
