@@ -2,6 +2,7 @@
   "name": "neighborhood_map",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://romklao.github.io/neighborhood_map/",
   "dependencies": {
     "axios": "^0.18.0",
     "escape-string-regexp": "^1.0.5",
