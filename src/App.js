@@ -18,6 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     window.initMap = this.initMap;
+    window.gm_authFailure = this.gm_authFailure;
     createScriptTagGoogleMapApi(`https://maps.googleapis.com/maps/api/js?libraries=places,
       geometry,drawing&key=AIzaSyA4FUFm6FyFiWEWu_em6VATxxHfEs2lUts&v=3&callback=initMap`);
   }
@@ -36,6 +37,12 @@ class App extends Component {
 
     self.createMarkers();
   }
+
+  gm_authFailure = () => {
+    const mapView = document.getElementById('map-container');
+    mapView.innerHTML = '<p id="error-map">Authentication Error with Google Map!</p>';
+  }
+
 
 // This function creates markers for each place found in places search.
   createMarkers = () => {
@@ -222,13 +229,13 @@ class App extends Component {
       document.getElementById(elementId).innerHTML = ratingReview;
     })
     .catch(err => {
-      document.getElementById(elementId).innerHTML = `<p>No results! ${err}</p>`;
+      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No results!</p>`;
     });
   }
 
   render() {
     return (
-      <div className="app">
+      <div className="app" aria-label="Neighborhood Map Application">
         <SidebarContainer
           markers={ this.state.markers }
           map={ this.map }
