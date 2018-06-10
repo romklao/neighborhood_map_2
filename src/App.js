@@ -3,6 +3,8 @@ import axios from 'axios';
 import MapContainer from './Components/MapContainer';
 import SidebarContainer from './Components/SidebarContainer';
 import { theme } from './Theme';
+//Get the Yelp API key from Config, it does not show on Github
+//becuase it is hidden in .gitignore
 import config from './Config';
 import './App.css';
 
