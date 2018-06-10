@@ -231,7 +231,7 @@ class App extends Component {
       document.getElementById(elementId).innerHTML = ratingReview;
     })
     .catch(err => {
-      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No results!</p>`;
+      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No rating results!</p>`;
     });
   }
 
