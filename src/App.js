@@ -237,7 +237,7 @@ class App extends Component {
 
   render() {
     return (
-      <div className="app" aria-label="Neighborhood Map Application">
+      <div className="app" role="main">
         <SidebarContainer
           markers={ this.state.markers }
           map={ this.map }

@@ -79,7 +79,7 @@ class SidebarContainer extends Component {
                 id="search-input"
                 type="search"
                 list="places"
-                aria-labelledby="place name"
+                role="search"
                 placeholder="Place Name"
                 onChange={this.openMarker}
               />
@@ -96,7 +96,7 @@ class SidebarContainer extends Component {
               </datalist>
               <input
                 className="submit"
-                aria-labelledby="filter"
+                aria-label="filter"
                 type="submit"
                 value="Filter"
                 onClick={this.filterLocations}
