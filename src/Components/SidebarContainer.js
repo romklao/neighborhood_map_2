@@ -74,7 +74,7 @@ class SidebarContainer extends Component {
             <p className="header">
               Silicon Valley
             </p>
-            <form autoComplete="off" role="form">
+            <form autoComplete="off">
               <input
                 id="search-input"
                 type="search"
