@@ -8,7 +8,8 @@ class SidebarContainer extends Component {
     markers: PropTypes.array.isRequired
   }
   // Only show the filtered markers on the map acoording to users search
-  filterLocations = () => {
+  filterLocations = (e) => {
+    e.preventDefault();
     const { markers } = this.props;
     const query = document.getElementById('search-input').value;
 
@@ -22,6 +23,7 @@ class SidebarContainer extends Component {
   }
   // Open the marker that is clicked from the search list
   openMarker = (e) => {
+    e.preventDefault();
     const { markers } = this.props;
     const value = e.target.value;
 
@@ -72,29 +74,34 @@ class SidebarContainer extends Component {
             <p className="header">
               Silicon Valley
             </p>
-            <input
-              id="search-input"
-              type="search"
-              list="places"
-              placeholder="Place Name"
-              onChange={this.openMarker}
-            />
-            <datalist
-              id="places">
-              {markers.map((marker, index) => (
-                <option
-                  className="place-option"
-                  value={ marker.title }
-                  key={ index }
-                />
-              ))}
-            </datalist>
-            <input
-              className="submit"
-              type="submit"
-              value="Filter"
-              onClick={this.filterLocations}
-            />
+            <form autoComplete="off" role="form">
+              <input
+                id="search-input"
+                type="search"
+                list="places"
+                aria-labelledby="place name"
+                placeholder="Place Name"
+                onChange={this.openMarker}
+              />
+              <datalist
+                id="places">
+                {markers.map((marker, index) => (
+                  <option
+                    className="place-option"
+                    value={ marker.title }
+                    key={ index }
+                    tabIndex="0"
+                  />
+                ))}
+              </datalist>
+              <input
+                className="submit"
+                aria-labelledby="filter"
+                type="submit"
+                value="Filter"
+                onClick={this.filterLocations}
+              />
+            </form>
           </div>
         </aside>
       </nav>
