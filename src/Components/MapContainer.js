@@ -2,7 +2,12 @@ import React from 'react';
 
 const MapContainer = (props) => {
   return (
-    <div id="map-container" role="application"></div>
+    <section
+      id="map-container"
+      role="application"
+      aria-label="Map"
+      >
+    </section>
   );
 }
 
