@@ -30,8 +30,8 @@ Follow these steps:
 2. Clone this repository to your computer `git clone https://github.com/romklao/neighborhood_map.git`
 3. In src folder create Config.js file:
 
-   `touch Config.js`
-   `atom Config.js`
+   - `touch Config.js`
+   - `atom Config.js`
 
 4. In the Config file, enter your Yelp API keys in an object like so (naming them whatever you like, and putting the keys in as strings). You don't need any other code in this file:
 
