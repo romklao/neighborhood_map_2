@@ -36,8 +36,14 @@ class SidebarContainer extends Component {
   }
   // Hide or show the search container when the ham icon is clicked
   toggleHidden = () => {
-    const sideBar = document.getElementById('search-container');
     const navHam = document.getElementById('nav-ham');
+    const sideBar = document.getElementById('search-container');
+
+    if (navHam.style.left === "16em") {
+      navHam.style.left = "0";
+    } else {
+      navHam.style.left = "16em";
+    }
 
     if (sideBar.style.display === "block") {
       sideBar.style.display = "none";
@@ -45,11 +51,6 @@ class SidebarContainer extends Component {
       sideBar.style.display = "block";
     }
 
-    if (navHam.style.left === "16em") {
-      navHam.style.left = "0";
-    } else {
-      navHam.style.left = "16em";
-    }
   }
 
   render() {
@@ -62,8 +63,9 @@ class SidebarContainer extends Component {
         <header id="nav-ham-wrap">
           <div id="nav-ham">
             <a
-              onClick={this.toggleHidden}
               className="ham"
+              aria-label="Menu Hamburger Link"
+              onClick={this.toggleHidden}
             >
               <i className="fas fa-bars"></i>
             </a>
@@ -74,7 +76,7 @@ class SidebarContainer extends Component {
             <p className="header">
               Silicon Valley
             </p>
-            <form autoComplete="off">
+            <form autoComplete="off" >
               <input
                 id="search-input"
                 type="search"
