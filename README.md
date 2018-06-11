@@ -35,9 +35,9 @@ Follow these steps:
 
 4. In the Config file, enter your Yelp API keys in an object like so (naming them whatever you like, and putting the keys in as strings). You don't need any other code in this file:
 
-    `const config = {
-      headers: {'Authorization': 'Bearer  <Your Yelp API Key>'}
-    }`
+      `const config = {
+        headers: {'Authorization': 'Bearer  <Your Yelp API Key>'}
+       }`
 
     - Note: Keep space between Bearer and your API key.
 
