@@ -27,15 +27,28 @@ The project uses [Create-React-App starter code](https://github.com/facebookincu
 Follow these steps:
 
 1. Install node from the link above
-1. Clone this repository to your computer `git clone https://github.com/romklao/neighborhood_map.git`
-1. Install all the dependencies with `npm install`
-1. Launch the app with this command `npm start`
+2. Clone this repository to your computer `git clone https://github.com/romklao/neighborhood_map.git`
+3. In src folder create Config.js file:
+
+    touch Config.js
+    atom Config.js
+
+4. In the Config file, enter your Yelp API keys in an object like so (naming them whatever you like, and putting the keys in as strings). You don't need any other code in this file:
+
+    const config = {
+      headers: {'Authorization': 'Bearer  <Your Yelp API Key>'}
+    }
+    Note: Keep space between Bearer and your API key
+
+5. Install all the dependencies with `npm install`
+6. Launch the app with this command `npm start`
 
 The app will launch in your browser at the address[http://localhost:3000/](http://localhost:3000/).
 
 ## Build
 
-You can run the build for testing the service worker or any other reason following these steps
+You can run the build for testing the service worker or any other reason following these steps:
 
-1. First `npm run build` to create an optimized version of the project
-2. Then `npm run deploy` to deploy to the specified address
+1. First `npm run build` to create an optimized version of the project.
+2. Then `npm run deploy` to deploy to the specified address.
+
