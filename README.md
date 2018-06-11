@@ -28,7 +28,7 @@ Follow these steps:
 
 1. Install node from the link above.
 2. Clone this repository to your computer `git clone https://github.com/romklao/neighborhood_map.git`
-3. In src folder create Config.js file:
+3. In `src folder` create Config.js file:
 
    - `touch Config.js`
    - `atom Config.js`
