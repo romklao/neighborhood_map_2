@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import MapContainer from './Components/MapContainer';
 import SidebarContainer from './Components/SidebarContainer';
-import { theme } from './Theme';
+import theme from './Theme';
 //Get the Yelp API key from Config, it does not show on Github
 //becuase it is hidden in .gitignore
 import config from './Config';
@@ -106,6 +106,9 @@ class App extends Component {
       infowindow.setContent('');
       infowindow.marker = marker;
     }
+
+    // Open the infowindow on the correct marker.
+    infowindow.open(self.map, marker);
     // Make sure the marker property is cleared if the infowindow is closed.
     infowindow.addListener('closeclick', () => {
       infowindow = null;
@@ -113,6 +116,7 @@ class App extends Component {
 
     let streetViewService = new window.google.maps.StreetViewService();
     let radius = 100;
+
     // In case the status is OK, which means the pano was found, compute the
     // position of the streetview image, then calculate the heading, then get a
     // panorama from that and set the options
@@ -162,8 +166,6 @@ class App extends Component {
     // Use streetview service to get the closest streetview image within
     // 100 meters of the markers position
     streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
-    // Open the infowindow on the correct marker.
-    infowindow.open(self.map, marker);
   }
 
   // This is the PLACE DETAILS search - it's the most detailed so it's only
