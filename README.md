@@ -3,7 +3,7 @@
 ![Part of the Udacity Front-End Web Development Nanodegree](https://img.shields.io/badge/Udacity-React-02b3e4.svg)
 
 
-<div  align="center" margin="20px 0">
+<div style="align:center;margin:20px 0;">
 	<img src="public/live-image.png" alt="neighborhood map" height="520px">
 </div>
 
