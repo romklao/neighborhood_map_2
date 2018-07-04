@@ -149,7 +149,7 @@ class App extends Component {
         let panoContainer = window.document.getElementById('pano');
         new window.google.maps.StreetViewPanorama(panoContainer, panoramaOptions);
 
-      } else {
+       } else {
 
         self.getYelpReviews(marker, 'rating-no-streetview');
         self.getPlacesDetails(marker, 'info-no-streetview');
@@ -233,7 +233,7 @@ class App extends Component {
       document.getElementById(elementId).innerHTML = ratingReview;
     })
     .catch(err => {
-      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No rating results!</p>`;
+      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No rating results ${err}!</p>`;
     });
   }
 
