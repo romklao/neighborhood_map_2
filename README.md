@@ -2,9 +2,11 @@
 
 ![Part of the Udacity Front-End Web Development Nanodegree](https://img.shields.io/badge/Udacity-React-02b3e4.svg)
 
+
 <div  align="center">
-	<img src="public/live-image.png" alt="neighborhood map" height="550px">
+	<img src="public/live-image.png" alt="neighborhood map" height="500px">
 </div>
+
 
 
 This is the **Udacity Neighborhood Map Project**. It's intended as a challenge to put together a website from various APIs. This includes making function calls to Google Maps to get the map and locations details. Furthermore, ratings and reviews are retrieved from Yelp Fusion.
