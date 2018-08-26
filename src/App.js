@@ -3,8 +3,6 @@ import axios from 'axios';
 import MapContainer from './Components/MapContainer';
 import SidebarContainer from './Components/SidebarContainer';
 import theme from './Theme';
-//Get the Yelp API key from Config, it does not show on Github
-//becuase it is hidden in .gitignore
 import config from './Config';
 import './App.css';
 
@@ -17,6 +15,7 @@ class App extends Component {
 
   map = null;
   markers = [];
+  infoWindow = null;
 
   componentDidMount() {
     window.initMap = this.initMap;
@@ -37,6 +36,7 @@ class App extends Component {
       mapTypeControl: false
     });
 
+    self.infoWindow = new window.google.maps.InfoWindow();
     self.createMarkers();
   }
 
@@ -68,7 +68,6 @@ class App extends Component {
       });
 
       let placesService = new window.google.maps.places.PlacesService(self.map);
-      let placeInfoWindow = new window.google.maps.InfoWindow();
       let bounds;
 
       marker.addListener('click', function() {
@@ -84,14 +83,13 @@ class App extends Component {
             marker.id = markerId;
           }
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            self.generateInfoWindow(marker, placeInfoWindow)
+            self.infoWindow.close();
+            self.generateInfoWindow(marker, self.infoWindow);
           }
         });
       });
-
       self.markers.push(marker);
       self.setState({markers: self.markers});
-
     }
   }
 
@@ -105,67 +103,68 @@ class App extends Component {
     // Clear the infowindow content to give the streetview time to load.
       infowindow.setContent('');
       infowindow.marker = marker;
-    }
 
-    // Open the infowindow on the correct marker.
-    infowindow.open(self.map, marker);
-    // Make sure the marker property is cleared if the infowindow is closed.
-    infowindow.addListener('closeclick', () => {
-      infowindow = null;
-    });
+      // Make sure the marker property is cleared if the infowindow is closed.
+      infowindow.addListener('closeclick', () => {
+        infowindow = null;
+      });
 
-    let streetViewService = new window.google.maps.StreetViewService();
-    let radius = 100;
+      let streetViewService = new window.google.maps.StreetViewService();
+      let radius = 100;
 
-    // In case the status is OK, which means the pano was found, compute the
-    // position of the streetview image, then calculate the heading, then get a
-    // panorama from that and set the options
-    let getStreetView = (data, status) => {
-      if (status === window.google.maps.StreetViewStatus.OK) {
+      // In case the status is OK, which means the pano was found, compute the
+      // position of the streetview image, then calculate the heading, then get a
+      // panorama from that and set the options
+      function getStreetView(data, status) {
+        if (status === window.google.maps.StreetViewStatus.OK) {
 
-        let nearStreetViewLocation = data.location.latLng;
-        let heading = window.google.maps.geometry.spherical.computeHeading(
-          nearStreetViewLocation, marker.position);
+          let nearStreetViewLocation = data.location.latLng;
+          let heading = window.google.maps.geometry.spherical.computeHeading(
+            nearStreetViewLocation, marker.position
+          );
 
-        self.getYelpReviews(marker, 'rating-streetview');
-        self.getPlacesDetails(marker, 'info-streetview');
+          self.getYelpReviews(marker, 'rating-streetview');
+          self.getPlacesDetails(marker, 'info-streetview');
 
-        infowindow.setContent(
-          `<div id="info-wrap-streetview">
-            <div id="pano"></div>
-            <div id="info-streetview"></div>
-           </div>
-           <div id="rating-streetview"></div>`
-        );
+          infowindow.setContent(
+            `<div id="info-wrap-streetview">
+              <div id="pano"></div>
+              <div id="info-streetview"></div>
+             </div>
+             <div id="rating-streetview"></div>`
+          );
 
-        let panoramaOptions = {
-          position: nearStreetViewLocation,
-          pov: {
-            heading: heading,
-            pitch: 5,
-          }
-        };
+          let panoramaOptions = {
+            position: nearStreetViewLocation,
+            pov: {
+              heading: heading,
+              pitch: 5,
+            }
+          };
 
-        let panoContainer = window.document.getElementById('pano');
-        new window.google.maps.StreetViewPanorama(panoContainer, panoramaOptions);
+          let panoContainer = document.getElementById('pano');
+          new window.google.maps.StreetViewPanorama(panoContainer, panoramaOptions);
 
-       } else {
+        } else {
 
-        self.getYelpReviews(marker, 'rating-no-streetview');
-        self.getPlacesDetails(marker, 'info-no-streetview');
+          self.getYelpReviews(marker, 'rating-no-streetview');
+          self.getPlacesDetails(marker, 'info-no-streetview');
 
-        infowindow.setContent(
-          `<div id="info-wrap-no-streetview">
-            <div id="no-image">No street view found!</div>
-            <div id='info-no-streetview'></div>
-           </div>
-           <div id="rating-no-streetview"></div>`
-        );
+          infowindow.setContent(
+            `<div id="info-wrap-no-streetview">
+              <div id="no-image">No street view found!</div>
+              <div id='info-no-streetview'></div>
+             </div>
+             <div id="rating-no-streetview"></div>`
+          );
+        }
       }
+      // Use streetview service to get the closest streetview image within
+      // 100 meters of the markers position
+      streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
+      // Open the infowindow on the correct marker.
+      infowindow.open(self.map, marker);
     }
-    // Use streetview service to get the closest streetview image within
-    // 100 meters of the markers position
-    streetViewService.getPanoramaByLocation(marker.position, radius, getStreetView);
   }
 
   // This is the PLACE DETAILS search - it's the most detailed so it's only
@@ -233,7 +232,7 @@ class App extends Component {
       document.getElementById(elementId).innerHTML = ratingReview;
     })
     .catch(err => {
-      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No rating results ${err}!</p>`;
+      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No rating results!</p>`;
     });
   }
 
@@ -243,7 +242,6 @@ class App extends Component {
         <SidebarContainer
           markers={ this.state.markers }
           map={ this.map }
-          generateMarkers={ this.createMarkers }
         />
         <MapContainer />
       </div>
