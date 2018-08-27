@@ -20,7 +20,7 @@ This application follow this [Udacity Project Rubric](https://review.udacity.com
 
 ## Run Online Project
 
-Click the link following https://romklao.github.io/neighborhood_map/ to see the webpage.
+Click the link following https://romklao.github.io/neighborhood_map_2/ to see the webpage.
 
 ## Features
 
