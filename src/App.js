@@ -83,7 +83,6 @@ class App extends Component {
             marker.id = markerId;
           }
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            self.infoWindow.close();
             self.generateInfoWindow(marker, self.infoWindow);
           }
         });
