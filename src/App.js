@@ -35,14 +35,7 @@ class App extends Component {
       styles: self.state.styles,
       mapTypeControl: false
     });
-<<<<<<< HEAD
     self.infoWindow = new window.google.maps.InfoWindow();
-||||||| merged common ancestors
-
-=======
-
-    self.infoWindow = new window.google.maps.InfoWindow();
->>>>>>> master
     self.createMarkers();
   }
 
@@ -89,14 +82,7 @@ class App extends Component {
             marker.id = markerId;
           }
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-<<<<<<< HEAD
-            self.generateInfoWindow(marker, self.infoWindow)
-||||||| merged common ancestors
-            self.generateInfoWindow(marker, placeInfoWindow)
-=======
-            self.infoWindow.close();
             self.generateInfoWindow(marker, self.infoWindow);
->>>>>>> master
           }
         });
       });
@@ -243,14 +229,8 @@ class App extends Component {
       document.getElementById(elementId).innerHTML = ratingReview;
     })
     .catch(err => {
-<<<<<<< HEAD
-      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No rating results!</p>`;
-||||||| merged common ancestors
-      document.getElementById(elementId).innerHTML = `<p id="error-yelp">No results!</p>`;
-=======
       console.log(err);
       document.getElementById(elementId).innerHTML = `<p id="error-yelp">No rating results!</p>`;
->>>>>>> master
     });
   }
 
