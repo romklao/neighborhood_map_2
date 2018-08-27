@@ -2,6 +2,14 @@
 
 ![Part of the Udacity Front-End Web Development Nanodegree](https://img.shields.io/badge/Udacity-React-02b3e4.svg)
 
+
+<div  align="center" margin="20px">
+	<img src="public/live-image.png" alt="neighborhood map" height="520px">
+</div>
+
+
+---
+
 This is the **Udacity Neighborhood Map Project**. It's intended as a challenge to put together a website from various APIs. This includes making function calls to Google Maps to get the map and locations details. Furthermore, ratings and reviews are retrieved from Yelp Fusion.
 
 Included is a list of atrractions in Silicon Valley that visitors should stop by.
@@ -26,16 +34,30 @@ The project uses [Create-React-App starter code](https://github.com/facebookincu
 
 Follow these steps:
 
-1. Install node from the link above
-1. Clone this repository to your computer `git clone https://github.com/romklao/neighborhood_map.git`
-1. Install all the dependencies with `npm install`
-1. Launch the app with this command `npm start`
+1. Install node from the link above.
+2. Clone this repository to your computer `git clone https://github.com/romklao/neighborhood_map.git`
+3. In `src folder` create Config.js file:
+
+   - `touch Config.js`
+   - `atom Config.js`
+
+4. In the Config file, enter your Yelp API keys in an object like so (naming them whatever you like, and putting the keys in as strings). You don't need any other code in this file:
+
+      `const config = {
+        headers: {'Authorization': 'Bearer  <Your Yelp API Key>'}
+       }`
+
+    - Note: Keep space between Bearer and your API key.
+
+5. Install all the dependencies with `npm install`
+6. Launch the app with this command `npm start`
 
 The app will launch in your browser at the address[http://localhost:3000/](http://localhost:3000/).
 
 ## Build
 
-You can run the build for testing the service worker or any other reason following these steps
+You can run the build for testing the service worker or any other reason following these steps:
 
-1. First `npm run build` to create an optimized version of the project
-2. Then `npm run deploy` to deploy to the specified address
+1. First `npm run build` to create an optimized version of the project.
+2. Then `npm run deploy` to deploy to the specified address.
+

@@ -5,7 +5,7 @@ const MapContainer = (props) => {
     <section
       id="map-container"
       role="application"
-      aria-label="Map"
+      aria-label="google map"
       >
     </section>
   );
