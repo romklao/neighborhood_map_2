@@ -2,6 +2,7 @@
   "name": "neighborhood_map",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://romklao.github.io/neighborhood_map_2/",
   "dependencies": {
     "axios": "^0.18.0",
     "escape-string-regexp": "^1.0.5",
@@ -21,6 +22,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
   "devDependencies": {
