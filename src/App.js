@@ -123,9 +123,6 @@ class App extends Component {
             nearStreetViewLocation, marker.position
           );
 
-          self.getYelpReviews(marker, 'rating-streetview');
-          self.getPlacesDetails(marker, 'info-streetview');
-
           infowindow.setContent(
             `<div id="info-wrap-streetview">
               <div id="pano"></div>
@@ -133,6 +130,9 @@ class App extends Component {
              </div>
              <div id="rating-streetview"></div>`
           );
+
+          self.getYelpReviews(marker, 'rating-streetview');
+          self.getPlacesDetails(marker, 'info-streetview');
 
           let panoramaOptions = {
             position: nearStreetViewLocation,
@@ -147,9 +147,6 @@ class App extends Component {
 
         } else {
 
-          self.getYelpReviews(marker, 'rating-no-streetview');
-          self.getPlacesDetails(marker, 'info-no-streetview');
-
           infowindow.setContent(
             `<div id="info-wrap-no-streetview">
               <div id="no-image">No street view found!</div>
@@ -157,6 +154,8 @@ class App extends Component {
              </div>
              <div id="rating-no-streetview"></div>`
           );
+          self.getYelpReviews(marker, 'rating-no-streetview');
+          self.getPlacesDetails(marker, 'info-no-streetview');
         }
       }
       // Use streetview service to get the closest streetview image within
