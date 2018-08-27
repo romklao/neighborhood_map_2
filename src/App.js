@@ -3,8 +3,6 @@ import axios from 'axios';
 import MapContainer from './Components/MapContainer';
 import SidebarContainer from './Components/SidebarContainer';
 import { theme } from './Theme';
-//Get the Yelp API key from Config, it does not show on Github
-//becuase it is hidden in .gitignore
 import config from './Config';
 import './App.css';
 
@@ -17,6 +15,7 @@ class App extends Component {
 
   map = null;
   markers = [];
+  infoWindow = null;
 
   componentDidMount() {
     window.initMap = this.initMap;
@@ -36,7 +35,7 @@ class App extends Component {
       styles: self.state.styles,
       mapTypeControl: false
     });
-
+    self.infoWindow = new window.google.maps.InfoWindow();
     self.createMarkers();
   }
 
@@ -68,7 +67,6 @@ class App extends Component {
       });
 
       let placesService = new window.google.maps.places.PlacesService(self.map);
-      let placeInfoWindow = new window.google.maps.InfoWindow();
       let bounds;
 
       marker.addListener('click', function() {
@@ -84,7 +82,7 @@ class App extends Component {
             marker.id = markerId;
           }
           if (status === window.google.maps.places.PlacesServiceStatus.OK) {
-            self.generateInfoWindow(marker, placeInfoWindow)
+            self.generateInfoWindow(marker, self.infoWindow)
           }
         });
       });
