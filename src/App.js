@@ -125,13 +125,15 @@ class App extends Component {
           infowindow.setContent(
             `<div id="info-wrap-streetview">
               <div id="pano"></div>
-              <div id="info-streetview"></div>
-             </div>
-             <div id="rating-streetview"></div>`
+              <div id="info-streetview">
+                <div id="info-hours-streetview"></div>
+                <div id="reviews-rating"></div>
+              </div>
+             </div>`
           );
 
-          self.getYelpReviews(marker, 'rating-streetview');
-          self.getPlacesDetails(marker, 'info-streetview');
+          self.getPlacesDetails(marker, 'info-hours-streetview');
+          self.getYelpReviews(marker, 'reviews-rating');
 
           let panoramaOptions = {
             position: nearStreetViewLocation,
@@ -149,12 +151,14 @@ class App extends Component {
           infowindow.setContent(
             `<div id="info-wrap-no-streetview">
               <div id="no-image">No street view found!</div>
-              <div id='info-no-streetview'></div>
-             </div>
-             <div id="rating-no-streetview"></div>`
+              <div id='info-no-streetview'>
+                <div id="info-hours-no-streetview"></div>
+                <div id="rating-no-streetview"></div>
+              </div>
+             </div>`
           );
+          self.getPlacesDetails(marker, 'info-hours-no-streetview');
           self.getYelpReviews(marker, 'rating-no-streetview');
-          self.getPlacesDetails(marker, 'info-no-streetview');
         }
       }
       // Use streetview service to get the closest streetview image within
@@ -188,7 +192,7 @@ class App extends Component {
           info += `<p>${place.formatted_phone_number}</p>`;
         }
         if (place.opening_hours) {
-          info += `<h4>Hours:</h4>
+          info += `<h4>Hours</h4>
                    <p>${place.opening_hours.weekday_text[0]}</p>
                    <p>${place.opening_hours.weekday_text[1]}</p>
                    <p>${place.opening_hours.weekday_text[2]}</p>
@@ -217,16 +221,15 @@ class App extends Component {
     }
     axios.get('https://cors-anywhere.herokuapp.com/https://api.yelp.com/v3/businesses/search', yelpApiUrl)
     .then(response => {
-      let ratingReview = '<p>';
+      let ratingReview = '';
 
       if (response.data.businesses[0].rating) {
-        ratingReview += `<span id="rating">Rating: </span>
+        ratingReview += `<p id="rating">Rating</p>
                          <span id="num-rating">${response.data.businesses[0].rating} out of 5</span>`
       }
       if (response.data.businesses[0].url) {
-        ratingReview += `<a href="${response.data.businesses[0].url}">Review</a>`
+        ratingReview += `<a href="${response.data.businesses[0].url}">Reviews</a>`
       }
-      ratingReview += '</p>'
       document.getElementById(elementId).innerHTML = ratingReview;
     })
     .catch(err => {
