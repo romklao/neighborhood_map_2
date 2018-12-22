@@ -116,7 +116,7 @@ input[type=submit]:hover {
 #pano,
 #no-image {
   width: 260px;
-  height: 270px;
+  height: 320px;
   margin-right: 1.3em;
 }
 
@@ -126,6 +126,7 @@ input[type=submit]:hover {
 
 .gm-style-iw {
   top: 13px !important;
+  padding-bottom: 5px;
 }
 
 #info-wrap-streetview,
@@ -168,6 +169,10 @@ input[type=submit]:hover {
   margin: 7px 0 7px;
 }
 
+#reviews-rating a {
+  font-size: 16px;
+}
+
 #num-rating {
   margin: 0 10px 0 3px;
   font-size: 15px;
@@ -183,7 +188,7 @@ input[type=submit]:hover {
 @media screen and (max-width: 650px) {
   .gm-style-iw {
     max-width: 270px !important;
-    top: 22px !important;
+    top: 15px !important;
     left: 34px !important;
   }
   #info-wrap-streetview,
@@ -204,7 +209,10 @@ input[type=submit]:hover {
   #pano,
   #no-image {
     width: 245px;
-    height: 230px;
+    height: 220px;
+  }
+  #rating {
+    display: inline;
   }
 }
 
